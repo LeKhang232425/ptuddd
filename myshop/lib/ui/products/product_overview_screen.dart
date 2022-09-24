@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
+import '../shared/app_drawer.dart';
+import '../cart/cart_screen.dart';
 import 'products_gird.dart';
+import '../shared/app_drawer.dart';
+
 
 enum FilterOptions { favorites, all }
 
@@ -16,7 +19,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     return Scaffold(
       appBar: AppBar(
         title: const Text('Myshop'),
         actions: <Widget>[
@@ -24,6 +27,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           buildShoppingCartIcon(),
         ],
       ),
+      drawer: const AppDrawer(),
       body: ProductGrid(_showOnlyFavorites),
     );
   }
@@ -34,7 +38,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         Icons.shopping_cart,
       ),
       onPressed: () {
-        print('Go to cart screen');
+       Navigator.of(context).pushNamed(CartScreen.routeName);
       },
     );
   }

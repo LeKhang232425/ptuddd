@@ -6,7 +6,7 @@ import 'package:myshop/ui/auth/auth_screen.dart';
 import 'package:myshop/ui/products/edit_product_screen.dart';
 import 'ui/screens.dart';
 import 'package:provider/provider.dart';
-import 'ui/screens.dart';
+
 
 Future<void> main() async {
   await dotenv.load();
@@ -23,13 +23,13 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (ctx) => AuthManager(),
           ),
-          // ChangeNotifierProxyProvider<AuthManager, ProductsManager>(
-          //   create: (ctx) => ProductsManager(),
-          //   update: (ctx, authManager, productsManager) {
-          //     productsManager!.authToken = authManager.authToken;
-          //     return productsManager;
-          //   },
-          // ),
+          ChangeNotifierProxyProvider<AuthManager, ProductsManager>(
+            create: (ctx) => ProductsManager(),
+            update: (ctx, authManager, productsManager) {
+              productsManager!.authToken = authManager.authToken;
+              return productsManager;
+            },
+          ),
           ChangeNotifierProvider(
             create: (ctx) => CartManager(),
           ),

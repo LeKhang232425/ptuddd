@@ -1,33 +1,68 @@
-import 'cart_item.dart';
+import 'package:flutter/foundation.dart';
 
-class OrderItem {
+class Product {
   final String? id;
-  final double amount;
-  final List<CartItem> products;
-  final DateTime dateTime;
+  final String title;
+  final String description;
+  final double price;
+  final String imageUrl;
+  final ValueNotifier<bool> _isFavorite;
 
-  int get productCount {
-    return products.length;
+  Product({
+    this.id,
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.imageUrl,
+    isFavorite = false,
+  }) : _isFavorite = ValueNotifier(isFavorite);
+
+  set isFavorite(bool newValue) {
+    _isFavorite.value = newValue;
   }
 
-  OrderItem({
-    this.id,
-    required this.amount,
-    required this.products,
-    DateTime? dateTime,
-  }) : dateTime = dateTime ?? DateTime.now();
+  bool get isFavorite {
+    return _isFavorite.value;
+  }
 
-  OrderItem copyWith({
+  ValueNotifier<bool> get isFavoriteListenable {
+    return _isFavorite;
+  }
+
+  Product copyWith({
     String? id,
-    double? amount,
-    List<CartItem>? products,
-    DateTime? dateTime,
+    String? title,
+    String? description,
+    double? price,
+    String? imageUrl,
+    bool? isFavorite,
   }) {
-    return OrderItem(
+    return Product(
       id: id ?? this.id,
-      amount: amount ?? this.amount,
-      products: products ?? this.products,
-      dateTime: dateTime ?? this.dateTime,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      price: price ?? this.price,
+      imageUrl: imageUrl ?? this.imageUrl,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'description': description,
+      'price': price,
+      'imageUrl': imageUrl,
+    };
+  }
+
+  static Product fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      price: json['price'],
+      imageUrl: json['imageUrl'],
     );
   }
 }

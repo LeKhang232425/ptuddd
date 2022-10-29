@@ -7,6 +7,7 @@ class Product {
   final double price;
   final String imageUrl;
   final ValueNotifier<bool> _isFavorite;
+
   Product({
     this.id,
     required this.title,
@@ -15,6 +16,7 @@ class Product {
     required this.imageUrl,
     isFavorite = false,
   }) : _isFavorite = ValueNotifier(isFavorite);
+
   set isFavorite(bool newValue) {
     _isFavorite.value = newValue;
   }
@@ -45,7 +47,7 @@ class Product {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'title': title,
       'description': description,
@@ -54,7 +56,7 @@ class Product {
     };
   }
 
-  static Product fromJon(Map<String, dynamic> json) {
+  static Product fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
       title: json['title'],

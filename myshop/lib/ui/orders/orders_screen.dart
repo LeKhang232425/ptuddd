@@ -7,12 +7,12 @@ import 'package:provider/provider.dart';
 
 class OrdersScreen extends StatelessWidget {
   static const routeName = '/orders';
+
   const OrdersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     print('building orders');
-    final ordersManager = OrdersManager();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Orders'),
@@ -22,11 +22,10 @@ class OrdersScreen extends StatelessWidget {
         builder: (ctx, ordersManager, child) {
           return ListView.builder(
             itemCount: ordersManager.orderCount,
-            itemBuilder: (ctx, i) =>
-              OrderItemCard(ordersManager.orders[i]),
+            itemBuilder: (ctx, i) => OrderItemCard(ordersManager.orders[i]),
           );
         },
       ),
-      );
+    );
   }
 }

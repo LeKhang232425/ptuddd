@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-
 import '../../models/cart_item.dart';
 import '../../models/product.dart';
 
@@ -35,19 +34,17 @@ class CartManager with ChangeNotifier {
 
   void addItem(Product product) {
     if (_items.containsKey(product.id)) {
-      //change quantity
       _items.update(
-        product.id!,
-        (existingCartItem) => existingCartItem.copyWith(
-          quantity: existingCartItem.quantity + 1,
-        ),
-      );
+          product.id!,
+          (existingCartItem) => existingCartItem.copyWith(
+                quantity: existingCartItem.quantity + 1,
+              ));
     } else {
       _items.putIfAbsent(
         product.id!,
         () => CartItem(
           id: 'c${DateTime.now().toIso8601String()}',
-          title: product.title,  
+          title: product.title,
           price: product.price,
           quantity: 1,
         ),

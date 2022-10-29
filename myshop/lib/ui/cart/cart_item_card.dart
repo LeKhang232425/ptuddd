@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'cart_manager.dart';
-import '../../models/cart_item.dart';
-
-import '../shared/dialog_utils.dart';
 import 'package:provider/provider.dart';
+import '../../models/cart_item.dart';
+import '../shared/dialog_utils.dart';
+import 'cart_manager.dart';
+
 class CartItemCard extends StatelessWidget {
   final String productId;
   final CartItem cardItem;
@@ -64,7 +64,7 @@ class CartItemCard extends StatelessWidget {
             ),
           ),
           title: Text(cardItem.title),
-          subtitle: Text('Total: \$${cardItem.price * cardItem.quantity}'),
+          subtitle: Text('Total: \$${(cardItem.price * cardItem.quantity)}'),
           trailing: Text('${cardItem.quantity} x'),
         ),
       ),

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../models/product.dart';
 import '../shared/dialog_utils.dart';
+
 import 'products_manager.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
+
   EditProductScreen(
     Product? product, {
     super.key,
@@ -23,6 +24,7 @@ class EditProductScreen extends StatefulWidget {
       this.product = product;
     }
   }
+
   late final Product product;
   @override
   State<EditProductScreen> createState() => _EditProductScreenState();
@@ -37,7 +39,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   bool _isValidImageUrl(String value) {
     return (value.startsWith('http') || value.startsWith('https')) &&
-        (value.endsWith('.png') ||
+        (value.endsWith('.pnd') ||
             value.endsWith('.jpg') ||
             value.endsWith('.jpeg'));
   }
@@ -70,6 +72,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _editForm.currentState!.save();
+
     setState(() {
       _isLoading = true;
     });
@@ -97,12 +100,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Product'), actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.save),
-          onPressed: _saveForm,
-        )
-      ]),
+      appBar: AppBar(
+        title: const Text('Edit Product'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.save),
+            onPressed: _saveForm,
+          ),
+        ],
+      ),
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(),
@@ -132,7 +138,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       autofocus: true,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Please provider a value.';
+          return 'Please provide a value.';
         }
         return null;
       },
@@ -150,10 +156,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
       keyboardType: TextInputType.number,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Please enter a price.';
+          return 'Please enter a price';
         }
         if (double.tryParse(value) == null) {
-          return 'Please enter a valid number.';
+          return 'Please enter a valid price.';
         }
         if (double.parse(value) <= 0) {
           return 'Please enter a number greater than zero.';
@@ -177,7 +183,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           return 'Please enter a description.';
         }
         if (value.length < 10) {
-          return 'Should be at least 10 characters long.';
+          return 'Should be at least 10 characters longs.';
         }
         return null;
       },
@@ -199,10 +205,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
             right: 10,
           ),
           decoration: BoxDecoration(
-              border: Border.all(
-            width: 1,
-            color: Colors.grey,
-          )),
+            border: Border.all(
+              width: 1,
+              color: Colors.grey,
+            ),
+          ),
           child: _imageUrlController.text.isEmpty
               ? const Text('Enter a URL')
               : FittedBox(
@@ -229,11 +236,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
       onFieldSubmitted: (value) => _saveForm(),
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Please enter an image URL.';
+          return 'Please enter an image URL';
         }
-
         if (!_isValidImageUrl(value)) {
-          return 'Please enter a valid image URL.';
+          return 'Please enter a valid image URL';
         }
         return null;
       },

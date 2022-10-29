@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/models/cart_item.dart';
-import 'package:myshop/ui/cart/cart_manager.dart';
-
 import '../../models/product.dart';
-
 import 'product_detail_screen.dart';
-
 import 'package:provider/provider.dart';
+import '../cart/cart_manager.dart';
+import 'products_manager.dart';
 
 class ProductGridTile extends StatelessWidget {
   const ProductGridTile(
     this.product, {
-      super.key,
-    }
-  );
+    super.key,
+  });
 
   final Product product;
 
@@ -25,10 +21,10 @@ class ProductGridTile extends StatelessWidget {
         footer: buildGridFooterBar(context),
         child: GestureDetector(
           onTap: () {
-            // print('Go to product detail screen');
-            Navigator.of(context).pushNamed(
-              ProductDetailScreen.routeName,
-              arguments: product.id,
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => ProductDetailScreen(product),
+              ),
             );
           },
           child: Image.network(
@@ -39,19 +35,20 @@ class ProductGridTile extends StatelessWidget {
       ),
     );
   }
+
   Widget buildGridFooterBar(BuildContext context) {
     return GridTileBar(
       backgroundColor: Colors.black87,
       leading: ValueListenableBuilder<bool>(
         valueListenable: product.isFavoriteListenable,
-        builder: (ctx, isFavorite, child){
+        builder: (ctx, isFavorite, child) {
           return IconButton(
             icon: Icon(
               isFavorite ? Icons.favorite : Icons.favorite_border,
             ),
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
-              product.isFavorite = !isFavorite;
+              ctx.read<ProductsManager>().toggleFavoriteStatus(product);
             },
           );
         },

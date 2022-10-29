@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:intl/intl.dart';
 
+//import '../../models/order_item.dart';
 import '../../models/order_item.dart';
 
 class OrderItemCard extends StatefulWidget {
@@ -33,42 +33,40 @@ class _OrderItemCardState extends State<OrderItemCard> {
 
   Widget buildOrderDetails() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-      height: min(widget.order.productCount * 20.0 + 10, 100),
-      child: ListView(
-        children: widget.order.products
-            .map(
-              (prod) => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    prod.title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+        height: min(widget.order.productCount * 20.0 + 10, 100),
+        child: ListView(
+          children: widget.order.products
+              .map(
+                (prod) => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      prod.title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '${prod.quantity}x \$${prod.price}',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                    ),
-                  )
-                ],
-              ),
-            )
-            .toList(),
-      ),
-    );
+                    Text(
+                      '${prod.quantity}x \$${prod.price}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey,
+                      ),
+                    )
+                  ],
+                ),
+              )
+              .toList(),
+        ));
   }
 
   Widget buildOrderSummary() {
     return ListTile(
       title: Text('\$${widget.order.amount}'),
-      subtitle: Text(
-        DateFormat('dd/MM/yyyy hh:mm').format(widget.order.dateTime),
-      ),
+      subtitle:
+          Text(DateFormat('dd/MM/yyyy hh:mm').format(widget.order.dateTime)),
       trailing: IconButton(
         icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
         onPressed: () {
